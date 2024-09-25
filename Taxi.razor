@@ -1,0 +1,103 @@
+﻿
+
+
+@page "/taxi"
+
+<style>
+    .taxi-container {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .form-group {
+        margin-bottom: 20px;
+    }
+
+    .form-label {
+        font-weight: bold;
+        color: #333;
+    }
+
+    .form-input {
+        width: 100%;
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .submit-button {
+        background-color: #28a745; /* Color verde */
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 20px; /* Espacio entre el formulario y el botón */
+        margin-left: 20px; /* Mover el botón a la izquierda */
+    }
+
+        .submit-button:hover {
+            background-color: #218838; /* Color verde más oscuro al pasar el ratón */
+        }
+
+    .info-container {
+        text-align: left;
+        margin-top: 20px;
+    }
+
+    .info-label {
+        font-weight: bold;
+        color: #333;
+    }
+</style>
+
+<div class="taxi-container">
+    <h3>Taxi</h3>
+
+    <div class="form-group">
+        <label class="form-label">Haben Sie ein Taxi bestellt?</label>
+        <input type="checkbox" @bind="taxiPedido" />
+    </div>
+
+    @if (taxiPedido)
+    {
+        <div class="form-group">
+            <label class="form-label">Zimmer:</label>
+            <input class="form-input" type="text" @bind="habitacion" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Uhrzeit:</label>
+            <input class="form-input" type="text" @bind="hora" />
+        </div>
+
+        <!-- Botón de guardar solo visible cuando se ha marcado el checkbox -->
+        <button class="submit-button" @click="GuardarPedido">Speichern</button>
+    }
+
+    @if (infoGuardada)
+    {
+        <div class="info-container">
+            <p><span class="info-label">Taxi bestellt:</span> @taxiPedidoText</p>
+            <p><span class="info-label">Zimmer:</span> @habitacion</p>
+            <p><span class="info-label">Uhrzeit:</span> @hora</p>
+        </div>
+    }
+</div>
+
+@code {
+    private bool taxiPedido = false;
+    private string habitacion = "";
+    private string hora = "";
+    private bool infoGuardada = false;
+    private string taxiPedidoText = "";
+
+    private void GuardarPedido()
+    {
+        infoGuardada = true;
+        taxiPedidoText = taxiPedido ? "Ja" : "Nein";
+    }
+}

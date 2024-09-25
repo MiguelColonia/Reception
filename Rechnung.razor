@@ -1,0 +1,109 @@
+﻿
+
+
+
+@page "/Rechnung"
+
+<style>
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+    .input-field {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .submit-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
+    .form-container {
+        display: none;
+    }
+
+        .form-container.active {
+            display: block;
+        }
+</style>
+
+<div class="container">
+    <h1>Rechnung</h1>
+    <p>Bitte wählen Sie aus:</p>
+
+    <button class="button" @onclick="ClienteDevePagar">Kunde muss sofort zahlen</button>
+    <button class="button" @onclick="ClienteQuiereFactura">Kunde möchte Rechnung auf anderen Namen</button>
+    <button class="button" @onclick="ClienteDiceHabitacionPagada">Kunde sagt, das Zimmer ist bereits bezahlt</button>
+
+    <div class="form-container @formClass">
+        <p>Geben Sie hier die Details ein:</p>
+        <textarea class="input-field" @bind="detalles" placeholder="Details"></textarea>
+        <button class="submit-button" @onclick="Speichern">Speichern</button>
+    </div>
+</div>
+
+@code {
+    private string formClass = "";
+    private string detalles = "";
+
+    private void ClienteDevePagar()
+    {
+        formClass = "active";
+    }
+
+    private void ClienteQuiereFactura()
+    {
+        formClass = "active";
+    }
+
+    private void ClienteDiceHabitacionPagada()
+    {
+        formClass = "active";
+    }
+
+    private void Speichern()
+    {
+        // Aquí puedes agregar la lógica para guardar los detalles
+        // Por ejemplo, puedes enviarlos por correo electrónico
+        // También puedes reiniciar las variables después de guardar
+        formClass = "";
+        detalles = "";
+    }
+}

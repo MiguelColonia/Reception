@@ -1,0 +1,93 @@
+﻿
+@page "/Frühstuck"
+
+<style>
+    /* Estilos para el contenedor principal */
+    .container {
+        display: flex;
+        flex-direction: column;
+        align-items: center; /* Centrar contenido horizontalmente */
+        text-align: center; /* Centrar contenido verticalmente */
+    }
+
+    /* Estilos para los botones y el contador */
+    .button-container {
+        margin-bottom: 20px;
+    }
+
+    .round-button {
+        width: 60px;
+        height: 60px;
+        border: none;
+        border-radius: 50%;
+        font-size: 24px;
+        color: white;
+        background-color: #007bff;
+        cursor: pointer;
+        margin: 0 10px;
+        transition: background-color 0.3s;
+    }
+
+        .round-button:hover {
+            background-color: #0056b3;
+        }
+
+    .total-container {
+        text-align: center;
+    }
+
+    .counter {
+        font-size: 20px;
+        font-weight: bold;
+    }
+
+    /* Estilos para los encabezados y preguntas */
+    .fruehstueck-heading {
+        font-size: 24px;
+        font-weight: bold;
+        color: #333;
+        margin-bottom: 20px;
+    }
+
+    .fruehstueck-question {
+        font-size: 18px;
+        color: #666;
+    }
+
+    /* Estilos para el botón Speichern */
+    .save-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 20px; /* Espacio entre el contador y el botón */
+    }
+
+        .save-button:hover {
+            background-color: #218838;
+        }
+</style>
+
+<div class="container">
+    <h3 class="fruehstueck-heading">Willkommen zum Frühstück!</h3>
+
+    <p class="fruehstueck-question">Wie viele Frühstücke erwartest du morgen?!</p>
+
+    <div class="button-container">
+        <!-- Botones para incrementar y decrementar el contador -->
+        <button class="round-button increment-button" @onclick="IncrementiereFrühstück">+</button>
+        <button class="round-button decrement-button" @onclick="DecrementeFrühstück">-</button>
+    </div>
+
+    <div class="total-container">
+        <!-- Contador de frühstückszähler -->
+        <p>Total Frühstücke: <span class="counter">@frühstückszähler</span></p>
+    </div>
+
+    <!-- Botón para guardar los datos -->
+    <button class="save-button" @click="Speichern">Speichern</button>
+</div>
+

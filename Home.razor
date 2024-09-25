@@ -1,0 +1,112 @@
+﻿
+
+@page "/"
+
+<h1>Willkommen zu unserer Hotel-Management-App!</h1>
+
+<p class="intro">Unsere App ist perfekt für Hotelmitarbeiter, die bereits verschiedene Hotelmanagement-Software verwenden, aber immer noch Papier und Gedächtnis für Schichtwechsel nutzen. Mit unserer App können Sie spontan, einfach und ohne Verpflichtungen arbeiten. Alles, was Sie in dieser App notieren, wird als Erinnerung an die von Ihnen gewünschte E-Mail-Adresse gesendet.</p>
+
+<div class="container">
+    <button class="button" @onclick="ShowMessage">Ich finde es toll!</button>
+    <button class="button" @onclick="PayCoffee">Ich möchte dich auf einen Kaffee einladen.</button>
+    @if (showMessage)
+    {
+        <p class="message">Danke.</p>
+    }
+</div>
+
+<div class="impressum">
+    <h3>Impressum:</h3>
+    <div class="contact-info">
+        <p><strong>Name:</strong> Miguel Blanco Ruiz</p>
+        <p><strong>Email:</strong> miguelblancoruiz@gmail.com</p>
+    </div>
+    <div class="disclaimer">
+        <p>Dieses Projekt dient gemeinnützigen und nicht kommerziellen Zwecken.</p>
+        <p>Jegliche Haftung für Schäden, die direkt oder indirekt aus der Nutzung dieser App entstehen, wird ausgeschlossen.</p>
+    </div>
+</div>
+
+
+<style>
+    body {
+        font-family: Arial, sans-serif;
+        background-color: #f8f9fa;
+        color: #333;
+        margin: 0;
+        padding: 0;
+    }
+
+    h1, .intro {
+        text-align: center;
+        margin: 40px 0;
+    }
+
+    .container {
+        max-width: 800px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .button {
+        padding: 15px 40px;
+        background-color: #28a745;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+        margin-top: 30px;
+        display: block;
+        width: 100%;
+        max-width: 400px;
+        margin: 20px auto;
+    }
+
+        .button:hover {
+            background-color: #218838;
+        }
+
+    .message {
+        font-style: italic;
+        color: #555;
+    }
+
+    .impressum {
+        margin-top: 50px;
+        padding: 20px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    }
+
+        .impressum h3 {
+            margin-top: 0;
+            color: #333;
+        }
+
+    .contact-info p,
+    .disclaimer p {
+        margin: 10px 0;
+        color: #666;
+    }
+
+    .contact-info strong {
+        color: #222;
+    }
+
+</style>
+
+@code {
+    private bool showMessage = false;
+
+    private void ShowMessage()
+    {
+        showMessage = true;
+    }
+
+    private void PayCoffee()
+    {
+        // Aquí puedes agregar la lógica para abrir la opción de pago de PayPal
+    }
+}

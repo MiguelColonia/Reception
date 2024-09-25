@@ -1,0 +1,43 @@
+﻿@page "/wecker"
+
+
+<style>
+    /* Tu estilo CSS existente aquí */
+</style>
+
+<div class="wecker-container">
+    <h3>Wecker</h3>
+
+    <!-- Formulario para configurar el despertador -->
+    <div class="form-group">
+        <label class="form-label">Wecker eingestellt?</label>
+        <input type="checkbox" @bind="weckerEingestellt" />
+    </div>
+
+    @if (weckerEingestellt)
+    {
+        <div class="form-group">
+            <label class="form-label">Zimmer:</label>
+            <input class="form-input" type="text" @bind="zimmer" />
+        </div>
+
+        <div class="form-group">
+            <label class="form-label">Zeit:</label>
+            <input class="form-input" type="text" @bind="zeit" />
+        </div>
+
+        <!-- Botón de guardar solo visible cuando se ha marcado el checkbox -->
+        <button class="submit-button" @onclick="SpeichernWecker">Speichern</button>
+    }
+
+    <!-- Mostrar información guardada -->
+    @if (infoGespeichert)
+    {
+        <div class="info-container">
+            <p><span class="info-label">Wecker eingestellt:</span> @weckerEingestelltText</p>
+            <p><span class="info-label">Zimmer:</span> @zimmer</p>
+            <p><span class="info-label">Zeit:</span> @zeit</p>
+        </div>
+    }
+</div>
+

@@ -1,0 +1,116 @@
+﻿@page "/Senden"
+
+<h3>Senden</h3>
+
+<h3>Speichern und E-Mail senden</h3>
+
+<div class="container">
+    <button class="button" @onclick="Speichern">Speichern</button>
+    <button class="button" @onclick="AnzeigenEmailFormular">E-Mail senden</button>
+
+    <div id="email-form" style="display: @displayEmailForm;">
+        <label class="label" for="von">Senden von:</label>
+        <input type="text" id="von" class="input-field" @bind="sendenVon" placeholder="Geben Sie Ihre E-Mail-Adresse ein">
+
+        <label class="label" for="an">Senden an:</label>
+        <input type="text" id="an" class="input-field" @bind="sendenAn" placeholder="Geben Sie die E-Mail-Adresse des Empfängers ein">
+
+        <button class="button" @onclick="SendenEmail">Senden</button>
+    </div>
+</div>
+
+<style>
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        text-align: center;
+    }
+
+    .button {
+        display: inline-block;
+        padding: 10px 20px;
+        margin: 10px;
+        background-color: #28a745; /* Grün */
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+    .button:hover {
+        background-color: #218838; /* Dunkleres Grün bei Hover */
+    }
+
+    .label {
+        display: block;
+        text-align: left;
+        margin-bottom: 5px;
+    }
+
+    .input-field {
+        width: calc(100% - 16px);
+        padding: 8px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+        margin-bottom: 10px;
+    }
+</style>
+
+@code {
+    private string displayEmailForm = "none"; // Anfangs ausgeblendet
+    private string sendenVon = ""; // Absender-E-Mail
+    private string sendenAn = ""; // Empfänger-E-Mail
+
+    // Methode zum E-Mail senden
+    private async Task SendenEmail()
+    {
+        try
+        {
+            // PDF-Inhalt generieren
+            string contenidoPDF = await HolePDFInhaltVomServer();
+
+            // E-Mail konfigurieren
+            using (var email = new MailMessage())
+            {
+                email.From = new MailAddress(sendenVon); // Absender
+                email.To.Add(sendenAn); // Empfänger
+                email.Subject = "Informationen im PDF-Format";
+                email.Body = "Im Anhang finden Sie die Informationen im PDF-Format.";
+
+                // PDF anhängen
+                byte[] pdfBytes = Convert.FromBase64String(contenidoPDF);
+                using (MemoryStream pdfStream = new MemoryStream(pdfBytes))
+                {
+                    email.Attachments.Add(new Attachment(pdfStream, "information.pdf", "application/pdf"));
+
+                    // SMTP-Client konfigurieren
+                    using (var client = new SmtpClient("smtp.ejemplo.com", 587))
+                    {
+                        client.UseDefaultCredentials = false;
+                        client.Credentials = new NetworkCredential("tu_correo@ejemplo.com", "tu_contraseña");
+                        client.EnableSsl = true;
+
+                        // E-Mail senden
+                        await client.SendMailAsync(email);
+                    }
+                }
+            }
+
+            // Formularfelder zurücksetzen
+            sendenVon = "";
+            sendenAn = "";
+            displayEmailForm = "none";
+        }
+        catch (Exception ex)
+        {
+            // Fehlerbehandlung
+        }
+    }
+
+    // Methode zum Abrufen des PDF-Inhalts vom Server
+    private async Task<string> HolePDFInhaltVomServer()
+    {
+        // Logik zum Abrufen des PDF-Inhalts
+        // Hier sollte eine HTTP-Anfrage an den Server durchgeführ

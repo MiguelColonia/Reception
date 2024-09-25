@@ -1,0 +1,135 @@
+﻿
+
+
+@page "/kasse"
+
+<style>
+    .container {
+        max-width: 400px;
+        margin: 0 auto;
+        padding: 20px;
+        background-color: #f8f9fa;
+        border-radius: 5px;
+        box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+        text-align: center;
+    }
+
+    .button {
+        display: block;
+        width: 100%;
+        padding: 10px;
+        margin-bottom: 10px;
+        background-color: #007bff;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .button:hover {
+            background-color: #0056b3;
+        }
+
+    .input-field {
+        width: calc(100% - 20px);
+        padding: 10px;
+        margin-bottom: 10px;
+        border: 1px solid #ccc;
+        border-radius: 5px;
+        box-sizing: border-box;
+    }
+
+    .submit-button {
+        background-color: #28a745;
+        color: white;
+        padding: 10px 20px;
+        border: none;
+        border-radius: 5px;
+        cursor: pointer;
+        transition: background-color 0.3s;
+    }
+
+        .submit-button:hover {
+            background-color: #218838;
+        }
+
+    .message {
+        color: #28a745;
+        font-weight: bold;
+        margin-top: 20px;
+    }
+
+    .differenz-container {
+        margin-top: 20px;
+    }
+</style>
+
+<div class="container">
+    <h1>Kasse</h1>
+    <p>Bitte wählen Sie aus:</p>
+
+    <button class="button" @onclick="CajaCorrecta">Kasse Stimmt</button>
+    <button class="button" @onclick="CajaIncorrecta">Kasse Stimmt nicht</button>
+
+    @if (mostrarFormulario)
+    {
+        <div class="form-container">
+            <p>Geben Sie die erwartete Menge ein:</p>
+            <input type="number" class="input-field" @bind="mengeErwartet" placeholder="Erwartete Menge">
+            <p>Geben Sie die tatsächliche Menge ein:</p>
+            <input type="number" class="input-field" @bind="mengeIst" placeholder="Tatsächliche Menge">
+            <button class="submit-button" @onclick="Speichern">Speichern</button>
+        </div>
+    }
+
+    @if (mensajeAllesKlar)
+    {
+        <p class="message">Alles klar!</p>
+    }
+
+    @if (differenzAnzeigen)
+    {
+        <div class="differenz-container">
+            <p>Differenz:</p>
+            <input type="number" class="input-field" value="@differenz" readonly>
+            <button class="submit-button" @onclick="SpeichernDifferenz">Differenz speichern</button>
+        </div>
+    }
+</div>
+
+@code {
+    private bool mostrarFormulario = false;
+    private bool mensajeAllesKlar = false;
+    private bool differenzAnzeigen = false;
+    private int mengeErwartet = 0;
+    private int mengeIst = 0;
+    private int differenz = 0;
+
+    private void CajaCorrecta()
+    {
+        mostrarFormulario = false;
+        mensajeAllesKlar = true;
+        differenzAnzeigen = false;
+    }
+
+    private void CajaIncorrecta()
+    {
+        mostrarFormulario = true;
+        mensajeAllesKlar = false;
+        differenzAnzeigen = false;
+    }
+
+    private void Speichern()
+    {
+        differenz = mengeErwartet - mengeIst;
+        mostrarFormulario = false;
+        differenzAnzeigen = true;
+    }
+
+    private void SpeichernDifferenz()
+    {
+        // Aquí puedes agregar la lógica para guardar la diferencia
+        // Por ejemplo, puedes enviarla por correo electrónico
+    }
+}
